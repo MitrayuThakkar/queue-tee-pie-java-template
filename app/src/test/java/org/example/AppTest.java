@@ -6,9 +6,68 @@ package org.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+public class AppTest {
+
+    @Test
+    void testEnqueueAndSize() {
+        QueueTees queue = new QueueTees();
+        Cutie puppy = new App.Puppy();
+        Cutie kitty = new App.Kitty();
+
+        assertEquals(0, queue.size(), "Queue should be empty initially");
+
+        queue.enqueue(puppy);
+        queue.enqueue(kitty);
+
+        assertEquals(2, queue.size(), "Queue size should be 2 after enqueueing 2 items");
+    }
+
+    @Test
+    void testDequeue() {
+        QueueTees queue = new QueueTees();
+        Cutie puppy = new App.Puppy();
+        Cutie kitty = new App.Kitty();
+
+        queue.enqueue(puppy);
+        queue.enqueue(kitty);
+
+        assertEquals(puppy, queue.dequeue(), "First item dequeued should be the puppy");
+        assertEquals(kitty, queue.dequeue(), "Second item dequeued should be the kitty");
+    }
+
+    @Test
+    void testPeek() {
+        QueueTees queue = new QueueTees();
+        Cutie puppy = new App.Puppy();
+
+        queue.enqueue(puppy);
+
+        assertEquals(puppy, queue.peek(), "Peek should return the puppy without removing it");
+    }
+
+    @Test
+    void testFullQueue() {
+        QueueTees queue = new QueueTees();
+        queue.enqueue(new App.Puppy());
+        queue.enqueue(new App.Kitty());
+        queue.enqueue(new App.PygmyMarmoset());
+
+        // Try enqueueing to a full queue
+        queue.enqueue(new App.Puppy());  // Queue is full
+
+        assertEquals(4, queue.size(), "Queue should still have 3 items after trying to add a 4th");
+    }
+
+    @Test
+    void testClear() {
+        QueueTees queue = new QueueTees();
+        queue.enqueue(new App.Puppy());
+        queue.enqueue(new App.Kitty());
+
+        assertEquals(2, queue.size(), "Queue should have 2 items");
+
+        queue.clear();
+
+        assertEquals(0, queue.size(), "Queue should be empty after clearing");
     }
 }

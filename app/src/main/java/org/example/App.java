@@ -4,11 +4,73 @@
 package org.example;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+
+    public static class Puppy implements Cutie {
+        @Override
+        public String description() {
+            return "A little puppy with big, sad eyes";
+        }
+
+        @Override
+        public Integer cutenessRating() {
+            return 11; // This puppy gets an 11/10 for its cuteness
+        }
+    }
+
+    public static class Kitty implements Cutie {
+        @Override
+        public String description() {
+            return "A fluffy kitten with soft fur";
+        }
+
+        @Override
+        public Integer cutenessRating() {
+            return 10;
+        }
+    }
+
+    public static class PygmyMarmoset implements Cutie {
+        @Override
+        public String description() {
+            return "A tiny marmoset with big eyes and a mischievous look";
+        }
+
+        @Override
+        public Integer cutenessRating() {
+            return 9;
+        }
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        // Create Cutie objects
+        Cutie puppy = new Puppy();
+        Cutie kitty = new Kitty();
+        Cutie marmoset = new PygmyMarmoset();
+
+        // Create a QueueTees instance
+        QueueTees queue = new QueueTees();
+
+        // Display initial size (should be 0)
+        System.out.println("Queue size: " + queue.size());
+
+        // Enqueue the cuties
+        queue.enqueue(puppy);
+        queue.enqueue(kitty);
+        queue.enqueue(marmoset);
+
+        // Display size after enqueueing (should be 3)
+        System.out.println("Queue size after enqueues: " + queue.size());
+
+        // Peek at the front element (should be the puppy)
+        System.out.println("Peek: " + queue.peek().description());
+
+        // Dequeue and display the results
+        System.out.println("Dequeue 1: " + queue.dequeue().description());
+        System.out.println("Dequeue 2: " + queue.dequeue().description());
+        System.out.println("Dequeue 3: " + queue.dequeue().description());
+
+        // Final size of the queue (should be 0)
+        System.out.println("Final queue size: " + queue.size());
     }
 }
+
